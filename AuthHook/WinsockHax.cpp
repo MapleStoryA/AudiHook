@@ -5,10 +5,9 @@
 #include <stdio.h>
 #include <WS2spi.h>
 #include "WinsockHax.h"
-#include "ThemidaSDK.h"
 
-#define REPLACEPATTERN "8.31.99.14"
-#define HOSTNAME "dfnwqi12.oa.to"
+#define REPLACEPATTERN "54.208.49.76"
+#define HOSTNAME "172.25.4.244"
 
 typedef int (WINAPI * pWSPStartup)(WORD wVersionRequested, LPWSPDATA lpWSPData, LPWSAPROTOCOL_INFO lpProtocolInfo, WSPUPCALLTABLE UpcallTable, LPWSPPROC_TABLE lpProcTable);
 
@@ -59,6 +58,7 @@ int WINAPI WSPConnect_detour(SOCKET s, const struct sockaddr *name, int namelen,
 	char buf[50];
 	DWORD len = 50;
 	WSAAddressToString((sockaddr*)name, namelen, NULL, buf, &len);
+	printf("Connecting to: %s\n", buf);
 
 	if (strstr(buf, REPLACEPATTERN))
 	{
@@ -85,8 +85,6 @@ int WINAPI WSPStartup_detour(WORD wVersionRequested, LPWSPDATA lpWSPData, LPWSAP
 
 BOOL HaxWinsock()
 {
-	VM_START
-
 	HMODULE module = LoadLibrary("MSWSOCK");
 
 	if (!module)
@@ -104,7 +102,5 @@ BOOL HaxWinsock()
 		return FALSE;
 	}
 
-	VM_END
-
-		return TRUE;
+	return TRUE;
 }

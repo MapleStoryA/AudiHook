@@ -2,6 +2,10 @@
 *.d
 
 # Compiled Object files
+*.db
+Debug/**
+AuthHook/Debug/**
+*.opendb
 *.slo
 *.lo
 *.o
