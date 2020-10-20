@@ -72,11 +72,12 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL,  DWORD fdwReason, LPVOID lpvReserved)
 		freopen("CONOUT$", "w", stderr);
 		AllocConsole();*/
 
-		const BOOL winsockRet = true;//HaxWinsock();
+		const BOOL winsockRet = HaxWinsock();
 	
 		if (winsockRet == FALSE)
 		{
 			MessageBox(0, "Internal Hooks Failed", 0, 0);
+			return false;
 		}
 		HookPacket_OnReceive();
 		
